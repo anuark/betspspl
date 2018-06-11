@@ -11,4 +11,4 @@
 *.png binary
 *.gif binary
 
-./vendor/** binary
+vendor/* binary
