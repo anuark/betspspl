@@ -4,10 +4,11 @@ namespace api\controllers;
 
 use Yii;
 use yii\rest\ActiveController;
+use api\models\Bet;
 
 class BetController extends ActiveController
 {
-    public $modelClass = 'api\model\Bet';
+    public $modelClass = 'api\models\Bet';
 
     public function behaviors()
     {
