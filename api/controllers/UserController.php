@@ -17,6 +17,7 @@ class UserController extends ActiveController
             'corsFilter' => [
                 'class' => \yii\filters\Cors::className(),
                 'cors' => [
+                    'Access-Control-Allow-Origin' => ['*'],
                     'Access-Control-Max-Age' => 3600
                 ]
             ],
