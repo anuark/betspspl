@@ -14,10 +14,10 @@ class UserController extends ActiveController
     public function actionAuth()
     {
         $model = new LoginForm();
-        if ($model->load(YiI::$app->request->post()) && $model->validate()) {
+        if ($model->load(YiI::$app->request->post(), '') && $model->validate()) {
             return $model->user;
         }
 
-        throw BadRequestHttpException(getError($model));
+        throw new BadRequestHttpException(getError($model));
     }
 }

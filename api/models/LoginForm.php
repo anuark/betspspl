@@ -7,6 +7,8 @@ use yii\base\Model;
 
 class LoginForm extends Model
 {
+    public $googleid;
+    
     public function rules()
     {
         return [
