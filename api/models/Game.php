@@ -29,13 +29,13 @@ class Game extends \common\models\Game
             return $model->asserted;
         };
         $fields['bet_for_away'] = function($model) {
-            return $model->asserted;
+            return $model->bet_for_away;
         };
         $fields['bet_for_local'] = function($model) {
-            return $model->asserted;
+            return $model->bet_for_local;
         };
         $fields['bet_for_draw'] = function($model) {
-            return $model->asserted;
+            return $model->bet_for_draw;
         };
 
         return $fields;
