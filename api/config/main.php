@@ -24,7 +24,13 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'user',
+                    'exraPatterns' => [
+                        'POST auth' => 'auth'
+                    ]
+                ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'game'
