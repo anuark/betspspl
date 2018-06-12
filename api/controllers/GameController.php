@@ -15,11 +15,8 @@ class GameController extends Controller
             'corsFilter' => [
                 'class' => \yii\filters\Cors::className(),
                 'cors' => [
-                    'Origin' => ['*'],
-                    'Access-Control-Allow-Origin' => ['*'],
-                    'Access-Control-Request-Method' => ['*'],
                     'Access-Control-Request-Headers' => ['*'],
-                    'Access-Control-Max-Age' => ['3600']
+                    'Access-Control-Max-Age' => 3600
                 ]
             ],
             'authenticator' => [
