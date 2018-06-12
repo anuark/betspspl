@@ -35,6 +35,10 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'game'
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'bet'
+                ],
             ],
         ],
         'request' => [

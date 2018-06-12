@@ -13,7 +13,7 @@ class BetController extends ActiveController
     {
         return [
             'authenticator' => [
-                'className' => 'yii\filters\auth\HttpBearerAuth'
+                'class' => 'yii\filters\auth\HttpBearerAuth'
             ]
         ];
     }
