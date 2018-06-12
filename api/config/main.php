@@ -27,8 +27,9 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
-                    'extraPatterns' => [
-                        'POST,OPTIONS auth' => 'auth'
+                    'patterns' => [
+                        'POST,OPTIONS auth' => 'auth',
+                        'GET,OPTIONS,HEAD' => 'index'
                     ]
                 ],
                 [
