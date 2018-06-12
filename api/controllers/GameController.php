@@ -27,9 +27,12 @@ class GameController extends Controller
             ->select([
                 'game.*',
                 'IF(b.id IS NOT NULL, 1, 0) AS has_bet',
-                'IF(b.id IS NOT NULL, b.asserted, 0) AS asserted'
+                'IF(b.id IS NOT NULL, b.asserted, 0) AS asserted',
+                'b.bet_for_local',
+                'b.bet_for_draw',
+                'b.bet_for_away'
             ])
-            ->leftJoin('bet b', 'b.game_id = game.id')
+            ->leftJoin('bet b', 'b.game_id = game.id AND b.user_id = '.Yii::$app->user->id)
             ->all();
     }
 }
