@@ -6,6 +6,8 @@ use Yii;
 
 class Game extends \common\models\Game
 {
+    public $date2;
+    
     public function fields()
     {
         $fields = parent::fields();
