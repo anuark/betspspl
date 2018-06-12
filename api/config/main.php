@@ -27,14 +27,20 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
-                    'patterns' => [
+                    'extraPatterns' => [
                         'POST,OPTIONS auth' => 'auth',
-                        'GET,OPTIONS,HEAD' => 'index'
                     ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'game'
+                    'controller' => 'game',
+                    'extraPatterns' => [
+                        'OPTIONS index' => 'index',
+                        'OPTIONS /' => 'index'
+                    ]
+                    // 'patterns' => [
+                        // 'GET,OPTIONS index' => 'index'
+                    // ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
