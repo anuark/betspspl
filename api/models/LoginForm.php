@@ -4,11 +4,12 @@ namespace api\models;
 
 use Yii;
 use yii\base\Model;
+use api\models\User;
 
 class LoginForm extends Model
 {
     public $googleid;
-    
+
     public function rules()
     {
         return [
@@ -18,6 +19,7 @@ class LoginForm extends Model
 
     public function getUser()
     {
-        return 123;
+        $user = User::find()->one();
+        return $user;
     }
 }
