@@ -22,11 +22,21 @@ class GameController extends Controller
                     'Access-Control-Max-Age' => ['3600']
                 ]
             ],
+            'authenticator' => [
+                'class' => 'yii\filters\auth\HttpBearerAuth'
+            ]
         ];
     }
 
     public function actionIndex()
     {
-        return Game::find()->all();
+        return Game::find()
+            ->select([
+                'game.*',
+                'IF(b.id IS NOT NULL, 1, 0) AS has_bet',
+                'IF(b.id IS NOT NULL, b.asserted, 0) AS asserted'
+            ])
+            ->leftJoin('bet b', 'b.game_id = game.id')
+            ->all();
     }
 }
