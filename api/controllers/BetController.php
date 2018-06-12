@@ -15,9 +15,6 @@ class BetController extends ActiveController
         return [
             'corsFilter' => [
                 'class' => \yii\filters\Cors::className(),
-                'cors' => [
-                    'Access-Control-Max-Age' => 3600
-                ]
             ],
             'authenticator' => [
                 'class' => 'yii\filters\auth\HttpBearerAuth'
