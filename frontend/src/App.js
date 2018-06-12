@@ -18,28 +18,38 @@ class App extends Component {
         };
     };
     componentDidMount = () => {
-        axios.get('https://bet-api.sps-pl.com/games')
-            .then(res => {
-                this.setState({
-                    games: res.data
-                });
-            });
-        let user = JSON.parse(localStorage.getItem('user'));
-        if ( user !== null && user !== undefined ) {
-            axios.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='+user.tokenId)
+        let guser = JSON.parse(localStorage.getItem('guser'));
+        if ( guser !== null && guser !== undefined ) {
+            axios.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='+guser.tokenId)
                 .then(res => {
                     if (res.error_description === undefined) {
                         this.setState({
-                            googleData: user,
-                            profile: user.profileObj,
+                            googleData: guser,
+                            profile: guser.profileObj,
                             online: true
                         });
                     }
+                    this.getGames();
                 });
         }
     };
+    getGames = () => {
+        let opt = {
+            method: 'GET',
+            url: 'https://bet-api.sps-pl.com/games',
+            headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        };
+        axios(opt).then(res => {
+            this.setState({
+                games: res.data
+            });
+        });
+    };
     responseGoogleSuccess = (response) => {
-        localStorage.setItem('user', JSON.stringify(response));
+        localStorage.setItem('guser', JSON.stringify(response));
         this.setState({
             googleData: response,
             profile: response.profileObj,
@@ -47,16 +57,18 @@ class App extends Component {
         });
         axios.post('https://bet-api.sps-pl.com/users/auth', response.profileObj)
             .then( res => {
-                console.log(res.data);
+                localStorage.setItem('userId', res.data.id);
+                localStorage.setItem('token', res.data.auth_key);
+                this.getGames();
             });
     };
     responseGoogleFail = (response) => {
         alert(response.error);
-        localStorage.setItem('user', null);
+        localStorage.setItem('guser', null);
         console.error(response.error);
     };
     logOut = () => {
-        localStorage.setItem('user', null);
+        localStorage.setItem('guser', null);
         this.setState({
             googleData: null,
             profile: null,

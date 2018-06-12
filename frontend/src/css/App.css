@@ -8,6 +8,8 @@ body {
   color: #1F1F1F;
 }
 .Login {
+  top: 0;
+  position: fixed;
   height: 90px;
   width: 100%;
   color: #FFFFFF;
@@ -105,7 +107,6 @@ body {
   margin-top: 5px;
   display: flex;
   flex-direction: row;
-  background-color: #FFFFFF;
   margin-bottom: 10px;
   font-size: 14px;
 }
@@ -129,6 +130,11 @@ body {
 .Matches .Match .radio {
   padding-top: 10px;
   text-align: center;
+}
+.info-date {
+  font-size: 14px;
+  color: #a5a5a5;
+  font-weight: 700;
 }
 .MatchDetails {
   margin: 10px;
@@ -179,6 +185,9 @@ body {
 }
 .MatchDetails .flag {
   vertical-align: middle;
+}
+.content {
+  margin-top: 110px;
 }
 .as-center {
   align-self: center;

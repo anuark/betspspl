@@ -9,10 +9,13 @@ class Matches extends Component {
     render() {
         const games = this.props.games;
         const listGames = games.map((game, index) =>
-            <Match key={game.id} goTo={this.goToMatch} id={game.id} info={game}/>
+            <div key={game.id}>
+                {game.first ? <div className='info-date'>{game.date}</div> : ''}
+                <Match goTo={this.goToMatch} id={game.id} info={game}/>
+            </div>
         )
         return (
-            <div className="Matches">
+            <div className="Matches content">
                 {listGames}
             </div>
         )
