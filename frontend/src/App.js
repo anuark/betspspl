@@ -43,6 +43,19 @@ class App extends Component {
             }
         };
         axios(opt).then(res => {
+            for (let i = 0; i < res.data.length; i++) {
+                const c = res.data[i];
+                if (i === 0) {
+                    c.first = 1
+                } else {
+                    const p = res.data[i-1];
+                    if (p.date === c.date) {
+                        c.first = 0;
+                    } else {
+                        c.first = 1;
+                    }
+                }
+            }
             this.setState({
                 games: res.data
             });
