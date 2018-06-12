@@ -18,11 +18,13 @@ class ScrappingController extends Controller
         // Console::output($res->data);
         $host = 'http://localhost:4444/wd/hub';
         $driver = Remote\RemoteWebDriver::create($host, Remote\DesiredCapabilities::chrome());
-        $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/3768/Stages/10274/Fixtures/International-FIFA-World-Cup-2014');
-        // $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
+        // $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/3768/Stages/10274/Fixtures/International-FIFA-World-Cup-2014');
+        $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
         $pageSource = $driver->getPageSource();
         // Console::output($pageSource);
-        file_put_contents('whoscored.com2.html', $pageSource);
+        file_put_contents('whoscored.com.2018.html', $pageSource);
+        // file_put_contents('whoscored.com2.html', $pageSource);
+        $driver->quit();
     }
 
     public function actionParse()
@@ -30,7 +32,7 @@ class ScrappingController extends Controller
         Game::deleteAll();
         $dom = new \domDocument;
         libxml_use_internal_errors(true);
-        $dom->loadHTML(file_get_contents('whoscored.com2.html'));
+        $dom->loadHTML(file_get_contents('whoscored.com.2018.html'));
         $dom->preserveWhiteSpace = false;
         $table = $dom->getElementById('tournament-fixture');
         $tbody = $table->childNodes[0];
