@@ -29,6 +29,7 @@ return [
                     'controller' => 'user',
                     'extraPatterns' => [
                         'POST,OPTIONS auth' => 'auth',
+                        'OPTIONS /' => 'index'
                     ]
                 ],
                 [
@@ -44,7 +45,10 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'bet'
+                    'controller' => 'bet',
+                    'extraPatterns' => [
+                        'OPTIONS /' => 'index'
+                    ]
                 ],
             ],
         ],
