@@ -9,6 +9,9 @@ class Game extends \common\models\Game
     public $date2;
     public $has_bet;
     public $asserted;
+    public $bet_for_local;
+    public $bet_for_away;
+    public $bet_for_draw;
 
     public function fields()
     {
@@ -23,6 +26,15 @@ class Game extends \common\models\Game
             return $model->has_bet;
         };
         $fields['asserted'] = function($model) {
+            return $model->asserted;
+        };
+        $fields['bet_for_away'] = function($model) {
+            return $model->asserted;
+        };
+        $fields['bet_for_local'] = function($model) {
+            return $model->asserted;
+        };
+        $fields['bet_for_draw'] = function($model) {
             return $model->asserted;
         };
 
