@@ -205,12 +205,30 @@ body {
     height: 70px;
     margin: 10px;
     border-radius: 10px;
-    background-color: #ff9a03;
+    background-color: #FF9A03;
+}
+.button.disabled {
+    height: 32px;
 }
 .button.active {
     background-color: #0366FF;
 }
-.back-image{
+.back-image {
     vertical-align: middle;
     margin-right: 5px;
+}
+.match-end {
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #FF9A03;
+    color: #FFFFFF;
+    margin: 10px -10px;
+    padding: 10px;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.43);
+    &-lost {
+        background-color: #C52E29;
+    }
+    &-win {
+        background-color: #2CCE46;
+    }
 }

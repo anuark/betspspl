@@ -27,7 +27,7 @@ class Matches extends Component {
         )
         return (
             <div className="Matches content">
-                <div className='info-date'><img onClick={this.goBack} className='back-image' src={backIcon} alt='back' /> {this.props.match.params.date}</div>
+                <div onClick={this.goBack} className='info-date'><img className='back-image' src={backIcon} alt='back' /> {this.props.match.params.date}</div>
                 {listGames}
             </div>
         )

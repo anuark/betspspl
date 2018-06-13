@@ -29,7 +29,7 @@ class App extends Component {
                             online: true
                         });
                     }
-                    this.getGames();
+                    this.authToMyServer(guser.profileObj);
                 });
         }
     };
@@ -45,6 +45,7 @@ class App extends Component {
         axios(opt).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 const c = res.data[i];
+                this.setBetMsg(c);
                 if (i === 0) {
                     c.first = 1
                 } else {
@@ -61,6 +62,17 @@ class App extends Component {
             });
         });
     };
+    setBetMsg = (game) => {
+        if (game.bet_for_away === '1') {
+            game.msg = 'Apostaste por ' + game.away_team
+        }
+        if (game.bet_for_local === '1') {
+            game.msg = 'Apostaste por ' + game.local_team
+        }
+        if (game.bet_for_draw === '1') {
+            game.msg = 'Apostaste por el empate'
+        }
+    };
     responseGoogleSuccess = (response) => {
         localStorage.setItem('guser', JSON.stringify(response));
         this.setState({
@@ -68,7 +80,10 @@ class App extends Component {
             profile: response.profileObj,
             online: true
         });
-        axios.post('https://bet-api.sps-pl.com/users/auth', response.profileObj)
+        this.authToMyServer(response.profileObj);
+    };
+    authToMyServer = (profileObj) => {
+        axios.post('https://bet-api.sps-pl.com/users/auth', profileObj)
             .then( res => {
                 localStorage.setItem('userId', res.data.id);
                 localStorage.setItem('token', res.data.auth_key);

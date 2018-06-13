@@ -68,98 +68,47 @@ const flag = {
 }
 
 class MatchDetails extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            classHome: 'col col-1 button',
-            classAway: 'col col-1 button',
-            classTie: 'col col-1 button',
-            msg: 'No has apostado'
-        };
-    };
-    componentDidMount = () => {
-        if (this.props.info.bet_for_away) {
-            this.setState({
-                classHome: 'col col-1 button',
-                classAway: 'col col-1 button active',
-                classTie: 'col col-1 button',
-                msg: 'Apostaste por '+this.props.info.away_team
-            });
-        }
-        if (this.props.info.bet_for_local) {
-            this.setState({
-                classHome: 'col col-1 button active',
-                classAway: 'col col-1 button',
-                classTie: 'col col-1 button',
-                msg: 'Apostaste por '+this.props.info.local_team
-            });
-        }
-        if (this.props.info.bet_for_draw) {
-            this.setState({
-                classHome: 'col col-1 button',
-                classAway: 'col col-1 button',
-                classTie: 'col col-1 button active',
-                msg: 'Apostaste por el empate'
-            });
-        }
-    };
     setActive = (e) => {
-        let id = e.target.getAttribute('id');
-        let data = {
-            game_id: this.props.info.id
-        };
-        switch (id) {
-            case 'home':
-                data.bet_for_local = 1;
-                data.bet_for_away = 0;
-                data.bet_for_draw = 0;
-                this.setState({
-                    classHome: 'col col-1 button active',
-                    classAway: 'col col-1 button',
-                    classTie: 'col col-1 button',
-                    msg: 'Apostaste por '+this.props.info.local_team
-                });
-                break;
-            case 'tie':
-                data.bet_for_draw = 1;
-                data.bet_for_away = 0;
-                data.bet_for_local = 0;
-                this.setState({
-                    classHome: 'col col-1 button',
-                    classAway: 'col col-1 button',
-                    classTie: 'col col-1 button active',
-                    msg: 'Apostaste por el empate'
-                });
-                break;
-            case 'away':
-                data.bet_for_away = 1;
-                data.bet_for_local = 0;
-                data.bet_for_draw = 0;
-                this.setState({
-                    classHome: 'col col-1 button',
-                    classAway: 'col col-1 button active',
-                    classTie: 'col col-1 button',
-                    msg: 'Apostaste por '+this.props.info.away_team
-                });
-                break;
-            default:
-                break;
+        if (this.props.info.status === 'to be played') {
+            let id = e.target.getAttribute('id');
+            let data = {
+                game_id: this.props.info.id
+            };
+            switch (id) {
+                case 'home':
+                    data.bet_for_local = 1;
+                    data.bet_for_away = 0;
+                    data.bet_for_draw = 0;
+                    break;
+                case 'tie':
+                    data.bet_for_draw = 1;
+                    data.bet_for_away = 0;
+                    data.bet_for_local = 0;
+                    break;
+                case 'away':
+                    data.bet_for_away = 1;
+                    data.bet_for_local = 0;
+                    data.bet_for_draw = 0;
+                    break;
+                default:
+                    break;
+            }
+            this.props.betFor(data);
         }
-        this.props.betFor(data);
     };
     render() {
         const info = this.props.info;
         if (info !== null) {
             return (
                 <div className="MatchDetails">
-                    <div className="info">{this.state.msg}</div>
+                    <div className="info">{info.msg}</div>
                     <div className="teams">
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.local_team]} alt="home" />
                         </div>
                         <div className="col col-1 as-center text-center">
                             Empate
-                    </div>
+                        </div>
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.away_team]} alt="home" />
                         </div>
@@ -168,17 +117,17 @@ class MatchDetails extends Component {
                         <div className="col col-1 text-center">
                             {info.local_team}
                         </div>
-                        <div className="col col-1 as-center text-center">
-
+                        <div className="col col-1 as-center text-center text-bold">
+                            {info.status === 'played' ? info.result : ''}
                         </div>
                         <div className="col col-1 text-center">
                             {info.away_team}
                         </div>
                     </div>
                     <div className="teams">
-                        <div id='home' onClick={this.setActive} className={this.state.classHome}></div>
-                        <div id='tie' onClick={this.setActive} className={this.state.classTie}></div>
-                        <div id='away' onClick={this.setActive} className={this.state.classAway}></div>
+                        <div id='home' onClick={this.setActive} className={info.bet_for_local === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                        <div id='tie' onClick={this.setActive} className={info.bet_for_draw === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                        <div id='away' onClick={this.setActive} className={info.bet_for_away === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
                     </div>
                 </div>
             )
