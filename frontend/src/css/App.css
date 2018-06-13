@@ -189,6 +189,7 @@ body {
 }
 .MatchDetails .flag {
   vertical-align: middle;
+  height: 75px;
 }
 .content {
   margin-top: 110px;
