@@ -68,14 +68,37 @@ const flag = {
 }
 
 class Match extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            msg: 'No has apostado'
+        };
+    };
+    componentDidMount = () => {
+        if (this.props.info.bet_for_away) {
+            this.setState({
+                msg: 'Apostaste por '+this.props.info.away_team
+            });
+        }
+        if (this.props.info.bet_for_local) {
+            this.setState({
+                msg: 'Apostaste por '+this.props.info.home_team
+            });
+        }
+        if (this.props.info.bet_for_draw) {
+            this.setState({
+                msg: 'Apostaste por el empate'
+            });
+        }
+    };
     goToMatch = () => {
-        this.props.goTo(this.props.id);
+        this.props.goTo(this.props.info.date);
     };
     render() {
         const info = this.props.info;
         return (
             <div className="Match" onClick={this.goToMatch}>
-                <div className="info">No has hecho apuesta</div>
+                <div className="info">{this.state.msg}</div>
                 <div className="teams">
                     <div className="col col-1 as-center text-center info">
                         {info.id}.

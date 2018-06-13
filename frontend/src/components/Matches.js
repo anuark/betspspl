@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import Match from './subcomponents/Match';
 
 class Matches extends Component {
-    goToMatch = (id) => {
-        this.props.history.push('/match/'+id);
-        this.props.setMatchDetails(id);
+    goToMatch = (date) => {
+        this.props.history.push('/match/'+date);
     };
     render() {
         const games = this.props.games;

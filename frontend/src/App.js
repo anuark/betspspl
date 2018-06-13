@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Login from './components/Login';
 import Matches from './components/Matches';
-import MatchDetails from './components/MatchDetails';
+import MatchesDetails from './components/MatchesDetails';
 import { Route } from 'react-router-dom';
 import './css/App.css';
 
@@ -82,22 +82,27 @@ class App extends Component {
     };
     logOut = () => {
         localStorage.setItem('guser', null);
+        localStorage.setItem('userID', null);
+        localStorage.setItem('token', null);
         this.setState({
             googleData: null,
             profile: null,
             online: false
         });
     };
-    betFor = () => {
-
-    };
-    setMatchDetails = (id) => {
-        this.state.games.forEach(game => {
-            if (game.id === id) {
-                this.setState({
-                    matchInfo: game
-                });
+    betFor = (data) => {
+        data.user_id = localStorage.getItem('userId');
+        let opt = {
+            method: 'POST',
+            url: 'https://bet-api.sps-pl.com/bets',
+            data: data,
+            headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
+        };
+        axios(opt).then(res=>{
+            this.getGames();
         });
     };
     render() {
@@ -105,8 +110,8 @@ class App extends Component {
             return (
                 <div className="App">
                     <Route path='/' render={(props)=><Login {...props} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
-                    <Route exact path='/' render={(props)=><Matches {...props} setMatchDetails={this.setMatchDetails} games={this.state.games}/>}/>
-                    <Route path='/match/:id' render={(props)=><MatchDetails {...props} info={this.state.matchInfo} betForFunction={this.props.betFor}/>}/>
+                    <Route exact path='/' render={(props)=><Matches {...props} games={this.state.games}/>}/>
+                    <Route path='/match/:date' render={(props)=><MatchesDetails {...props} games={this.state.games} betFor={this.betFor}/>}/>
                 </div>
             );
         } else {
