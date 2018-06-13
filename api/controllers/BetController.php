@@ -34,14 +34,14 @@ class BetController extends ActiveController
         $model = new Bet();
         if ($model->load(Yii::$app->request->post(), '')) {
             $bet = Bet::find()->where(['user_id' => $model->user_id, 'game_id' => $model->game_id])->one();
-            if (!$bet) {
-                $model->save();
-                return $model;
+            if ($bet) {
+                $bet->load(Yii::$app->request->post(), '');
+                $bet->update();
+                return $bet;
             }
 
-            $bet->load(Yii::$app->request->post(), '');
-            $bet->update();
-            return $bet;
+            $model->save();
+            return $model;
         }
 
         throw new BadRequestHttpException(getError($model));
