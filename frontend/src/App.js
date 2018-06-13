@@ -8,6 +8,7 @@ import axios from 'axios';
 import Login from './components/Login';
 import Matches from './components/Matches';
 import MatchesDetails from './components/MatchesDetails';
+import Stats from './components/Stats';
 import { Route } from 'react-router-dom';
 import './css/App.css';
 
@@ -149,6 +150,7 @@ class App extends Component {
                     <Route path='/' render={(props)=><Login {...props} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
                     <Route exact path='/' render={(props)=><Matches {...props} refresh={this.refreshDev} games={this.state.games}/>}/>
                     <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.refreshDev} games={this.state.games} betFor={this.betFor}/>}/>
+                    <Route exact path='/score' render={(props)=><Stats {...props} />} />
                 </div>
             );
         } else {

@@ -238,3 +238,11 @@ body {
   height: 42px;
   margin-right: 10px;
 }
+.table {
+  margin-bottom: 0!important;
+  border-bottom: 1px solid #A5A5A5;
+}
+.table .pos {
+  height: 16px;
+  width: 16px;
+}
