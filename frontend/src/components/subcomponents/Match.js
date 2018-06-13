@@ -75,7 +75,7 @@ class Match extends Component {
         const info = this.props.info;
         return (
             <div className="Match" onClick={this.goToMatch}>
-                <div className="info">{info.msg}</div>
+                <div className="info">{info.msg}<img className='status-icon' alt='status' src={info.ico}/></div>
                 <div className="teams">
                     <div className="col col-1 as-center text-center info">
                         {info.id}.

@@ -5,6 +5,7 @@ import backIcon from '../assets/back.png';
 class Matches extends Component {
     componentDidMount = () => {
         window.scrollTo(0, 0);
+        this.props.refresh(this.props.games);
     };
     goBack = () => {
         this.props.history.push('/');

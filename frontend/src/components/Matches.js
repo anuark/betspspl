@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Match from './subcomponents/Match';
 
 class Matches extends Component {
+    componentDidMount = () => {
+        window.scrollTo(0, 0);
+        this.props.refresh(this.props.games);
+    };
     goToMatch = (date) => {
         this.props.history.push('/match/'+date);
     };

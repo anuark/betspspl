@@ -8,12 +8,13 @@ body {
     color: #1F1F1F;
 }
 .Login {
+    z-index: 1;
     top: 0;
     position: fixed;
     height: 90px;
     width: 100%;
     color: #FFFFFF;
-    background-color: #FF9A03;
+    background-color: #0366FF;
     text-align: center;
     font-weight: 700;
     box-shadow: 0 2px 6px #000000a1;
@@ -28,7 +29,7 @@ body {
         border: 1px solid transparent;
         font-size: 16px;
         font-weight: bold;
-        background-color: #0366FF;
+        background-color: #FF9A03;
         img {
             background-color: #FFFFFF;
             border-radius: 4px;
@@ -47,6 +48,9 @@ body {
         display: flex;
         div {
             flex: 1;
+        }
+        img {
+            height: 28px;
         }
     }
 }
@@ -137,7 +141,7 @@ body {
     font-weight: 700;
 }
 .MatchDetails {
-    margin: 10px;
+    margin-top: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -217,18 +221,21 @@ body {
     vertical-align: middle;
     margin-right: 5px;
 }
-.match-end {
-    font-size: 14px;
-    font-weight: 700;
-    background-color: #FF9A03;
-    color: #FFFFFF;
-    margin: 10px -10px;
-    padding: 10px;
-    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.43);
-    &-lost {
-        background-color: #C52E29;
-    }
-    &-win {
-        background-color: #2CCE46;
-    }
+.status-icon {
+    position: absolute;
+    height: 24px;
+    right: 17px;
+}
+.info-icon {
+    height: 22px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.info.winners {
+    margin-top: 10px;
+}
+.winner-icon {
+    border-radius: 100px;
+    height: 42px;
+    margin-right: 10px;
 }

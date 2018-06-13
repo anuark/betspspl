@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import alarm from './assets/not-played.png';
+import wow from './assets/bet.png';
+import soccer from './assets/playing.png';
+import happy from './assets/won.png';
+import cry from './assets/lost.png';
 import axios from 'axios';
 import Login from './components/Login';
 import Matches from './components/Matches';
@@ -43,34 +48,51 @@ class App extends Component {
             }
         };
         axios(opt).then(res => {
-            for (let i = 0; i < res.data.length; i++) {
-                const c = res.data[i];
-                this.setBetMsg(c);
-                if (i === 0) {
-                    c.first = 1
+            this.refreshDev(res.data);
+        });
+    };
+    refreshDev = (data) => {
+        for (let i = 0; i <data.length; i++) {
+            const c =data[i];
+            this.setBetMsg(c);
+            if (i === 0) {
+                c.first = 1
+            } else {
+                const p =data[i-1];
+                if (p.date === c.date) {
+                    c.first = 0;
                 } else {
-                    const p = res.data[i-1];
-                    if (p.date === c.date) {
-                        c.first = 0;
-                    } else {
-                        c.first = 1;
-                    }
+                    c.first = 1;
                 }
             }
-            this.setState({
-                games: res.data
-            });
+        }
+        this.setState({
+            games: data
         });
     };
     setBetMsg = (game) => {
-        if (game.bet_for_away === '1') {
-            game.msg = 'Apostaste por ' + game.away_team
-        }
-        if (game.bet_for_local === '1') {
-            game.msg = 'Apostaste por ' + game.local_team
-        }
-        if (game.bet_for_draw === '1') {
-            game.msg = 'Apostaste por el empate'
+        if (game.status === 'to be played') {
+            if (game.bet_for_away === '1') {
+                game.ico = wow;
+                game.msg = 'Apostaste por ' + game.away_team;
+            } else if (game.bet_for_local === '1') {
+                game.ico = wow;
+                game.msg = 'Apostaste por ' + game.local_team;
+            } else if (game.bet_for_draw === '1') {
+                game.ico = wow;
+                game.msg = 'Apostaste por el empate';
+            } else {
+                game.ico = alarm;
+                game.msg = 'No has hecho apuesta';
+            }
+        } else if (game.status === 'playing') {
+            game.ico = soccer;
+        } else if (game.status === 'played') {
+            if (game.asserted === '1') {
+                game.ico = happy;
+            } else {
+                game.ico = cry;
+            }
         }
     };
     responseGoogleSuccess = (response) => {
@@ -125,8 +147,8 @@ class App extends Component {
             return (
                 <div className="App">
                     <Route path='/' render={(props)=><Login {...props} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
-                    <Route exact path='/' render={(props)=><Matches {...props} games={this.state.games}/>}/>
-                    <Route path='/match/:date' render={(props)=><MatchesDetails {...props} games={this.state.games} betFor={this.betFor}/>}/>
+                    <Route exact path='/' render={(props)=><Matches {...props} refresh={this.refreshDev} games={this.state.games}/>}/>
+                    <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.refreshDev} games={this.state.games} betFor={this.betFor}/>}/>
                 </div>
             );
         } else {

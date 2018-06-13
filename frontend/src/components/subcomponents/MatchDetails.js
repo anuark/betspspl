@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import trophy from '../../assets/trophy.png';
 import arg from '../../assets/flags/arg.png';
 import aus from '../../assets/flags/aus.png';
 import bel from '../../assets/flags/bel.png';
@@ -101,7 +102,7 @@ class MatchDetails extends Component {
         if (info !== null) {
             return (
                 <div className="MatchDetails">
-                    <div className="info">{info.msg}</div>
+                    <div className="info">{info.msg}<img className='status-icon' alt='status' src={info.ico}/></div>
                     <div className="teams">
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.local_team]} alt="home" />
@@ -124,11 +125,38 @@ class MatchDetails extends Component {
                             {info.away_team}
                         </div>
                     </div>
-                    <div className="teams">
-                        <div id='home' onClick={this.setActive} className={info.bet_for_local === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
-                        <div id='tie' onClick={this.setActive} className={info.bet_for_draw === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
-                        <div id='away' onClick={this.setActive} className={info.bet_for_away === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
-                    </div>
+                    {
+                        info.status === 'to be played' ?
+                            <div className="teams">
+                                <div id='home' onClick={this.setActive} className={info.bet_for_local === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                                <div id='tie' onClick={this.setActive} className={info.bet_for_draw === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                                <div id='away' onClick={this.setActive} className={info.bet_for_away === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                            </div>
+                        :
+                            <div className="teams">
+                                <div id='home' className={info.bet_for_local === '1' ? 'col col-1 button disabled active' : 'col col-1 disabled button'}></div>
+                                <div id='tie' className={info.bet_for_draw === '1' ? 'col col-1 button disabled active' : 'col col-1 disabled button'}></div>
+                                <div id='away' className={info.bet_for_away === '1' ? 'col col-1 button disabled active' : 'col col-1 disabled button'}></div>
+                            </div>
+                    }
+                    {
+                        info.status === 'played' ?
+                            <div>
+                                <div className="info">Ganadores<img className='info-icon' alt='trophy' src={trophy}/></div>
+                                <div className="info winners">
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                </div>
+                            </div>
+                        :
+                            null
+                    }
+                    
                 </div>
             )
         } else {
