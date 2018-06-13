@@ -91,7 +91,7 @@ class MatchDetails extends Component {
                 classHome: 'col col-1 button active',
                 classAway: 'col col-1 button',
                 classTie: 'col col-1 button',
-                msg: 'Apostaste por '+this.props.info.home_team
+                msg: 'Apostaste por '+this.props.info.local_team
             });
         }
         if (this.props.info.bet_for_draw) {
@@ -117,7 +117,7 @@ class MatchDetails extends Component {
                     classHome: 'col col-1 button active',
                     classAway: 'col col-1 button',
                     classTie: 'col col-1 button',
-                    msg: 'Apostaste por '+this.props.info.home_team
+                    msg: 'Apostaste por '+this.props.info.local_team
                 });
                 break;
             case 'tie':
