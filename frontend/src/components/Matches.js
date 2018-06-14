@@ -17,11 +17,19 @@ class Matches extends Component {
                 <Match goTo={this.goToMatch} id={game.id} info={game}/>
             </div>
         )
-        return (
-            <div className="Matches content">
-                {listGames}
-            </div>
-        )
+        if (games.length === 0) {
+            return (
+                <div className="Matches content">
+                    <div className='info-date'>Cargando...</div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="Matches content">
+                    {listGames}
+                </div>
+            );
+        }
     }
 }
 

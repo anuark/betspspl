@@ -26,12 +26,20 @@ class Matches extends Component {
                 <MatchDetails id={game.id} info={game} betFor={this.betFor}/>
             </div>
         )
-        return (
-            <div className="Matches content">
-                <div onClick={this.goBack} className='info-date'><img className='back-image' src={backIcon} alt='back' /> {this.props.match.params.date}</div>
-                {listGames}
-            </div>
-        )
+        if (games.length === 0) {
+            return (
+                <div className="Matches content">
+                    <div className='info-date'>Cargando...</div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="Matches content">
+                    <div onClick={this.goBack} className='info-date'><img className='back-image' src={backIcon} alt='back' /> {this.props.match.params.date}</div>
+                    {listGames}
+                </div>
+            );
+        }
     }
 }
 
