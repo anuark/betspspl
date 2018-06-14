@@ -93,7 +93,7 @@ class Match extends Component {
                         <div>{(info.status !== 'to be played' && info.result !== null) ? info.result.split(':')[1] : ''}</div>
                     </div>
                     <div className='col col-2 info date' >
-                        {info.date}
+                        {info.date} {info.time}
                     </div>
                 </div>
             </div>

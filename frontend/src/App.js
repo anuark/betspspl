@@ -20,7 +20,8 @@ class App extends Component {
             profile: null,
             online: false,
             matchInfo: null,
-            games: []
+            games: [],
+            points: 0
         };
     };
     componentDidMount = () => {
@@ -111,6 +112,9 @@ class App extends Component {
                 localStorage.setItem('userId', res.data.id);
                 localStorage.setItem('token', res.data.auth_key);
                 this.getGames();
+                this.setState({
+                    points: res.data.points
+                });
             });
     };
     responseGoogleFail = (response) => {
@@ -147,7 +151,7 @@ class App extends Component {
         if (this.state.online) {
             return (
                 <div className="App">
-                    <Route path='/' render={(props)=><Login {...props} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
+                    <Route path='/' render={(props)=><Login {...props} points={this.state.points} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
                     <Route exact path='/' render={(props)=><Matches {...props} refresh={this.getGames} games={this.state.games}/>}/>
                     <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.getGames} games={this.state.games} betFor={this.betFor}/>}/>
                     <Route exact path='/score' render={(props)=><Stats {...props} />} />
