@@ -44,6 +44,10 @@ class BetController extends ActiveController
                 $model->user_id = Yii::$app->user->id;
             }
 
+            if ($model->game->hasMatchStarted) {
+                throw new BadRequestHttpException("Can't bet when match has started.");
+            }
+
             $bet = Bet::find()->where(['user_id' => $model->user_id, 'game_id' => $model->game_id])->one();
             if ($bet) {
                 $bet->load(Yii::$app->request->post(), '');

@@ -104,4 +104,10 @@ class Game extends \yii\db\ActiveRecord
             }
         }
     }
+
+    public function getHasMatchStarted()
+    {
+        date_default_timezone_set('America/Tegucigalpa');
+        return time() > strtotime($this->date);
+    }
 }
