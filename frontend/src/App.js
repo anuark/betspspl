@@ -148,8 +148,8 @@ class App extends Component {
             return (
                 <div className="App">
                     <Route path='/' render={(props)=><Login {...props} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
-                    <Route exact path='/' render={(props)=><Matches {...props} refresh={this.refreshDev} games={this.state.games}/>}/>
-                    <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.refreshDev} games={this.state.games} betFor={this.betFor}/>}/>
+                    <Route exact path='/' render={(props)=><Matches {...props} refresh={this.getGames} games={this.state.games}/>}/>
+                    <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.getGames} games={this.state.games} betFor={this.betFor}/>}/>
                     <Route exact path='/score' render={(props)=><Stats {...props} />} />
                 </div>
             );

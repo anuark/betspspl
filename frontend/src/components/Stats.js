@@ -4,7 +4,7 @@ class Stats extends Component {
     render() {
         return (
             <div className="Matches content">
-                No hay resultados...
+                Esperando resultados...
             </div>
         )
     }
