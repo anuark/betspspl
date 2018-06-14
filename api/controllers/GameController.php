@@ -40,7 +40,7 @@ class GameController extends Controller
     public function actionWinners($id)
     {
         $this->findModel($id);
-        $userIds = Bet::find()->select('user_id')->where(['game_id' => 1, 'asserted' => 1])->column();
+        $userIds = Bet::find()->select('user_id')->where(['game_id' => $id, 'asserted' => 1])->column();
         return User::find()->where(['id' => $userIds])->all();
     }
 
