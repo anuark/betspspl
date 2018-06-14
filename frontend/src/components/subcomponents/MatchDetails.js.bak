@@ -144,7 +144,13 @@ class MatchDetails extends Component {
                             <div>
                                 <div className="info">Ganadores<img className='info-icon' alt='trophy' src={trophy}/></div>
                                 <div className="info winners">
-                                    Esperando resultados...
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
+                                    <img className='winner-icon' alt='winner' src='https://lh5.googleusercontent.com/-V-8iqh8gBMQ/AAAAAAAAAAI/AAAAAAAACGw/Or4EsR9rp6c/s96-c/photo.jpg'/>
                                 </div>
                             </div>
                         :
