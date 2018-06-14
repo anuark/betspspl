@@ -89,8 +89,8 @@ class Match extends Component {
                         </div>
                     </div>
                     <div className='col col-1 info score'>
-                        <div>{info.status === 'played' ? info.result.split(':')[0] : ''}</div>
-                        <div>{info.status === 'played' ? info.result.split(':')[1] : ''}</div>
+                        <div>{(info.status !== 'to be played' && info.result !== null) ? info.result.split(':')[0] : ''}</div>
+                        <div>{(info.status !== 'to be played' && info.result !== null) ? info.result.split(':')[1] : ''}</div>
                     </div>
                     <div className='col col-2 info date' >
                         {info.date}

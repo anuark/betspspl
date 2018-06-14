@@ -69,6 +69,30 @@ const flag = {
 }
 
 class MatchDetails extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            winners: []
+        };
+    };
+    componentDidMount = () => {
+        this.getWinners();
+    };
+    getWinners = () => {
+        let opt = {
+            method: 'GET',
+            url: 'https://bet-api.sps-pl.com/games/'+this.props.info.id+'/winners',
+            headers: {
+                'Authorization': 'Bearer '+localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        };
+        axios(opt).then(res => {
+            this.setState({
+                winners: res.data
+            });
+        });
+    };
     setActive = (e) => {
         if (this.props.info.status === 'to be played') {
             let id = e.target.getAttribute('id');
@@ -99,6 +123,10 @@ class MatchDetails extends Component {
     };
     render() {
         const info = this.props.info;
+        const winners = this.state.winners;
+        const listWinners = winners.map((u, i) =>
+            <img className='winner-icon' alt='winner' src={u.google_img_path}/>
+        );
         if (info !== null) {
             return (
                 <div className="MatchDetails">
@@ -119,7 +147,7 @@ class MatchDetails extends Component {
                             {info.local_team}
                         </div>
                         <div className="col col-1 as-center text-center text-bold">
-                            {info.status === 'played' ? info.result : ''}
+                            {info.status !== 'to be played' ? info.result : ''}
                         </div>
                         <div className="col col-1 text-center">
                             {info.away_team}
@@ -144,7 +172,7 @@ class MatchDetails extends Component {
                             <div>
                                 <div className="info">Ganadores<img className='info-icon' alt='trophy' src={trophy}/></div>
                                 <div className="info winners">
-                                    Esperando resultados...
+                                    {listWinners}
                                 </div>
                             </div>
                         :
