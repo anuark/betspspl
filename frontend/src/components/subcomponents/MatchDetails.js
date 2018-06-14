@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import trophy from '../../assets/trophy.png';
 import arg from '../../assets/flags/arg.png';
 import aus from '../../assets/flags/aus.png';
