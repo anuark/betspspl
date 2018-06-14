@@ -11,7 +11,7 @@ use common\models\Game;
 
 class ScrappingController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex($fileName = null)
     {
         // $req = Yii::$app->whoScoredClient->get('5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
         // $res = Yii::$app->whoScoredClient->send($req);
@@ -21,18 +21,23 @@ class ScrappingController extends Controller
         // $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/3768/Stages/10274/Fixtures/International-FIFA-World-Cup-2014');
         $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
         $pageSource = $driver->getPageSource();
-        // Console::output($pageSource);
-        file_put_contents('whoscored.com.2018.html', $pageSource);
-        // file_put_contents('whoscored.com2.html', $pageSource);
+        if (!$fileName) {
+            $fileName = 'whoscored.com.2018.html';
+        }
+
+        file_put_contents($fileName, $pageSource);
         $driver->quit();
     }
 
-    public function actionParse()
+    public function actionParse($fileName = null)
     {
-        Game::deleteAll();
+        // Game::deleteAll();
         $dom = new \domDocument;
         libxml_use_internal_errors(true);
-        $dom->loadHTML(file_get_contents('whoscored.com.2018.html'));
+        if (!$fileName) {
+            $fileName = 'whoscored.com.2018.html';
+        }
+        $dom->loadHTML(file_get_contents($fileName));
         $dom->preserveWhiteSpace = false;
         $table = $dom->getElementById('tournament-fixture');
         $tbody = $table->childNodes[0];
@@ -57,25 +62,40 @@ class ScrappingController extends Controller
                     if (stripos($child2->getAttribute('class'), 'result') !== false) {
                         $result = preg_replace("/\s+/", "", $child2->nodeValue);
                     }
+                    if (stripos($child2->getAttribute('class'), 'status') !== false) {
+                        $status = $child2->nodeValue;
+                    }
                 }
             }
             $date = date('Y-m-d', strtotime($date));
             $time = date('H:i:s', strtotime($time));
 
-            /**
-             * $time
-             * $homeTeam
-             * $awayTeam
-             * $result
-             */
-            $dateTime = $date . ' ' . $time;
-            $game = new Game([
-                'date' => $dateTime,
-                'local_team' => $homeTeam,
-                'away_team' => $awayTeam,
-                'result' => $result == 'vs' ? null : $result,
-                'status' => Game::STATUS_PLAYED
-            ]);
+            // Converting match day time to local time.
+            $dateTime = new \DateTime($date.' '.$time, new \DateTimeZone('Europe/London'));
+            $dateTime->setTimeZone(new \DateTimeZone('America/Tegucigalpa'));
+            $finalDateTime = $dateTime->format('Y-m-d H:i:s');
+
+            date_default_timezone_set('America/Tegucigalpa');
+            if ($status == 'FT') {
+                $finalStatus = Game::STATUS_PLAYED;
+            } elseif(time() > strtotime($finalDateTime)) {
+                $finalStatus = Game::STATUS_PLAYING;
+            } else {
+                $finalStatus = Game::STATUS_TO_BE_PLAYED;
+            }
+
+            $game = Game::find()->where(['date' => $finalDateTime, 'local_team' => $homeTeam, 'away_team' => $awayTeam])->one();
+            if (!$game) {
+                $game = new Game([
+                    'date' => $finalDateTime,
+                    'local_team' => $homeTeam,
+                    'away_team' => $awayTeam,
+                ]);
+            }
+
+            $game->result = $result == 'vs' ? null : $result;
+            $game->status = $finalStatus;
+
             if (!$game->save()) {
                 throw new Exception($game->errors);
             }

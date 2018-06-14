@@ -20,6 +20,12 @@ class Game extends \yii\db\ActiveRecord
     const STATUS_PLAYING = 'playing';
     const STATUS_PLAYED = 'played';
 
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'betWon']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -55,5 +61,47 @@ class Game extends \yii\db\ActiveRecord
             'result' => 'Result',
             'status' => 'Status',
         ];
+    }
+
+    public function getBets()
+    {
+        return $this->hasMany(Bet::className(), ['game_id' => 'id']);
+    }
+
+    public function betWon()
+    {
+        // If true means that the game just finished.
+        if (
+            $this->getOldAttribute('status') != self::STATUS_PLAYED && 
+            $this->getAttribute('status') == self::STATUS_PLAYED
+        ) {
+            if ($this->result) {
+                list($localResult, $awayResult) = explode(':', $this->result);
+                $betIds = $this->getBets()->select('id')->column();
+                // If either local won by result or by penalties. Penalties won have asterisks in result.
+                if ($localResult > $awayResult || strpos($localResult, '*') !== false) {
+                    Bet::updateAll(['asserted' => 1],
+                        [
+                            'id' => $betIds,
+                            'bet_for_local' => 1
+                        ]
+                    );
+                } elseif ($localResult < $awayResult || strpos($awayResult, '*') !== false) {
+                    Bet::updateAll(['asserted' => 1],
+                        [
+                            'id' => $betIds,
+                            'bet_for_away' => 1
+                        ]
+                    );
+                } else {
+                    Bet::updateAll(['asserted' => 1],
+                        [
+                            'id' => $betIds,
+                            'bet_for_draw' => 1
+                        ]
+                    );
+                }
+            }
+        }
     }
 }
