@@ -37,7 +37,8 @@ return [
                     'controller' => 'game',
                     'extraPatterns' => [
                         'OPTIONS index' => 'index',
-                        'OPTIONS /' => 'index'
+                        'OPTIONS /' => 'index',
+                        'GET,OPTIONS {id}/winners' => 'winners'
                     ]
                     // 'patterns' => [
                         // 'GET,OPTIONS index' => 'index'

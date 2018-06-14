@@ -40,6 +40,10 @@ class BetController extends ActiveController
     {
         $model = new Bet();
         if ($model->load(Yii::$app->request->post(), '')) {
+            if (!$model->user_id) {
+                $model->user_id = Yii::$app->user->id;
+            }
+
             $bet = Bet::find()->where(['user_id' => $model->user_id, 'game_id' => $model->game_id])->one();
             if ($bet) {
                 $bet->load(Yii::$app->request->post(), '');

@@ -4,7 +4,8 @@ namespace api\controllers;
 
 use Yii;
 use yii\rest\Controller;
-use api\models\Game;
+use api\models\{Game, Bet, User};
+use yii\web\NotFoundHttpException;
 
 class GameController extends Controller
 {
@@ -34,5 +35,27 @@ class GameController extends Controller
             ])
             ->leftJoin('bet b', 'b.game_id = game.id AND b.user_id = '.Yii::$app->user->id)
             ->all();
+    }
+
+    public function actionWinners($id)
+    {
+        $this->findModel($id);
+        $userIds = Bet::find()->select('user_id')->where(['game_id' => 1, 'asserted' => 1])->column();
+        return User::find()->where(['id' => $userIds])->all();
+    }
+
+    /**
+     * Finds the Game model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @return Game the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Game::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
