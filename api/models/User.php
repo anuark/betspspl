@@ -2,6 +2,8 @@
 
 namespace api\models;
 
+use yii\db\Query;
+
 class User extends \common\models\User
 {
     public function fields()
