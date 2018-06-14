@@ -137,7 +137,7 @@ class MatchDetails extends Component {
                             <img className="flag" src={flag[info.local_team]} alt="home" />
                         </div>
                         <div className="col col-1 as-center text-center text-bold">
-                            {info.status !== 'to be played' ? info.result : ''}
+                            {info.status !== 'to be played' ? info.result : info.time}
                         </div>
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.away_team]} alt="home" />

@@ -44,7 +44,7 @@ class Login extends Component {
                     </div>
                     <div className='pts'>
                         <div onClick={this.goToCalendar}><img src={icon_calendar} alt="calendar"/></div>
-                        <div>0 pts</div>
+                        <div>{this.props.points} pts</div>
                         <div onClick={this.goToScore}><img src={icon_table} alt="table"/></div>
                         <div onClick={this.logOut}><img src={icon_exit} alt="exit"/></div>
                     </div>
