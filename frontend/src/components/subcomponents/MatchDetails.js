@@ -136,7 +136,7 @@ class MatchDetails extends Component {
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.local_team]} alt="home" />
                         </div>
-                        <div className="col col-1 as-center text-center">
+                        <div className="col col-1 as-center text-center text-bold">
                             {info.status !== 'to be played' ? info.result : ''}
                         </div>
                         <div className="col col-1 text-center">
@@ -147,7 +147,7 @@ class MatchDetails extends Component {
                         <div className="col col-1 text-center">
                             {info.local_team}
                         </div>
-                        <div className="col col-1 as-center text-center text-bold">
+                        <div className="col col-1 as-center text-center">
                             Empate
                         </div>
                         <div className="col col-1 text-center">
