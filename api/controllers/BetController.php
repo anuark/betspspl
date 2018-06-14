@@ -23,6 +23,13 @@ class BetController extends ActiveController
         ];
     }
 
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['create']);
+        return $actions;
+    }
+
     public function acionIndex()
     {
         $bets = Bet::find()->where(['user_id' => Yii::$app->user->id])->all();
