@@ -5,7 +5,7 @@ import arg from '../../assets/flags/arg.png';
 import aus from '../../assets/flags/aus.png';
 import bel from '../../assets/flags/bel.png';
 import bra from '../../assets/flags/bra.png';
-import col from '../../assets/flags/ksa.png';
+import col from '../../assets/flags/col.png';
 import crc from '../../assets/flags/crc.png';
 import cro from '../../assets/flags/cro.png';
 import den from '../../assets/flags/den.png';
