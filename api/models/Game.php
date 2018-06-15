@@ -13,6 +13,41 @@ class Game extends \common\models\Game
     public $bet_for_away;
     public $bet_for_draw;
 
+    const esTeamNames = [
+        'Argentina' => 'Argentina',
+        'Australia' => 'Australia',
+        'Belgium' => 'Bélgica',
+        'Brazil' => 'Brasil',
+        'Colombia' => 'Colombia',
+        'Costa Rica' => 'Costa Rica',
+        'Croatia' => 'Croacia',
+        'Denmark' => 'Dinamarca',
+        'Egypt' => 'Egipto',
+        'England' => 'Inglaterra',
+        'France' => 'Francia',
+        'Germany' => 'Alemania',
+        'Iceland' => 'Islandia',
+        'Iran' => 'Irán',
+        'Japan' => 'Japón',
+        'Mexico' => 'México',
+        'Morocco' => 'Marruecos',
+        'Nigeria' => 'Nigeria',
+        'Panama' => 'Panama',
+        'Peru' => 'Peru',
+        'Poland' => 'Polonia',
+        'Portugal' => 'Portugal',
+        'Russia' => 'Rusia',
+        'Saudi Arabia' => 'Arabia Saudita',
+        'Senegal' => 'Senegal',
+        'Serbia' => 'Serbia',
+        'South Korea' => 'Corea del Sur',
+        'Spain' => 'España',
+        'Sweden' => 'Suecia',
+        'Switzerland' => 'Suiza',
+        'Tunisia' => 'Túnez',
+        'Uruguay' => 'Uruguay',
+    ];
+
     public function fields()
     {
         $fields = parent::fields();
@@ -36,6 +71,12 @@ class Game extends \common\models\Game
         };
         $fields['bet_for_draw'] = function($model) {
             return $model->bet_for_draw;
+        };
+        $fields['local_team_es'] = function ($model) {
+            return self::esTeamNames[$model->local_team];
+        };
+        $fields['away_team_es'] = function ($model) {
+            return self::esTeamNames[$model->away_team];
         };
 
         return $fields;
