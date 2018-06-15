@@ -73,7 +73,8 @@ class MatchDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            winners: []
+            winners: [],
+            loading: true
         };
     };
     componentDidMount = () => {
@@ -90,7 +91,8 @@ class MatchDetails extends Component {
         };
         axios(opt).then(res => {
             this.setState({
-                winners: res.data
+                winners: res.data,
+                loading: false
             });
         });
     };
@@ -177,7 +179,7 @@ class MatchDetails extends Component {
                             <div>
                                 <div className="info">Ganadores<img className='info-icon' alt='trophy' src={trophy}/></div>
                                 <div className="info winners">
-                                    {listWinners}
+                                    { this.state.loading ? 'Cargando...' : listWinners}
                                 </div>
                             </div>
                         :

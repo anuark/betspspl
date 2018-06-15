@@ -135,6 +135,16 @@ class App extends Component {
     };
     betFor = (data) => {
         data.user_id = localStorage.getItem('userId');
+        const gameData = this.state.games.slice();
+        for (let i = 0; i < gameData.length; i++) {
+            const c = gameData[i];
+            if (c.id === data.game_id) {
+                c.bet_for_away = data.bet_for_away.toString();
+                c.bet_for_local = data.bet_for_local.toString();
+                c.bet_for_draw = data.bet_for_draw.toString();
+            }
+        }
+        this.refreshDev(gameData);
         let opt = {
             method: 'POST',
             url: 'https://bet-api.sps-pl.com/bets',
