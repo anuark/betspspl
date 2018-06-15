@@ -11,14 +11,6 @@ use common\models\Game;
 
 class ScrappingController extends Controller
 {
-    public function actionCron()
-    {
-        $file = Yii::getAlias('@runtime/files/'.time().'.html');
-        $this->actionIndex($file);
-        $this->actionParse($file);
-        unlink($file);
-    }
-
     public function actionIndex($fileName = null)
     {
         $host = 'http://localhost:4444/wd/hub';
@@ -35,13 +27,19 @@ class ScrappingController extends Controller
             $fileName = 'whoscored.com.2018.html';
         }
 
-        file_put_contents($fileName, $pageSource);
+        while (1) {
+            $file = Yii::getAlias('@runtime/files/'.time().'.html');
+            file_put_contents($file, $pageSource);
+            $this->actionParse($file);
+            $driver->navigate()->refresh();
+            sleep(10);
+        }
+
         $driver->quit();
     }
 
     public function actionParse($fileName = null)
     {
-        // Game::deleteAll();
         $dom = new \domDocument;
         libxml_use_internal_errors(true);
         if (!$fileName) {
