@@ -23,7 +23,7 @@ class Matches extends Component {
         }
         const listGames = dateGames.map((game, index) =>
             <div key={game.id}>
-                <MatchDetails id={game.id} info={game} betFor={this.betFor}/>
+                <MatchDetails {...this.props} id={game.id} info={game} betFor={this.betFor}/>
             </div>
         )
         if (games.length === 0) {

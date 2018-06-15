@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Matches from './components/Matches';
 import MatchesDetails from './components/MatchesDetails';
 import Stats from './components/Stats';
+import Profile from './components/Profile';
 import { Route } from 'react-router-dom';
 import './css/App.css';
 
@@ -134,6 +135,16 @@ class App extends Component {
     };
     betFor = (data) => {
         data.user_id = localStorage.getItem('userId');
+        const gameData = this.state.games.slice();
+        for (let i = 0; i < gameData.length; i++) {
+            const c = gameData[i];
+            if (c.id === data.game_id) {
+                c.bet_for_away = data.bet_for_away.toString();
+                c.bet_for_local = data.bet_for_local.toString();
+                c.bet_for_draw = data.bet_for_draw.toString();
+            }
+        }
+        this.refreshDev(gameData);
         let opt = {
             method: 'POST',
             url: 'https://bet-api.sps-pl.com/bets',
@@ -155,6 +166,7 @@ class App extends Component {
                     <Route exact path='/' render={(props)=><Matches {...props} refresh={this.getGames} games={this.state.games}/>}/>
                     <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.getGames} games={this.state.games} betFor={this.betFor}/>}/>
                     <Route exact path='/score' render={(props)=><Stats {...props} />} />
+                    <Route path='/profile/:id' render={(props)=><Profile {...props} />} />
                 </div>
             );
         } else {
