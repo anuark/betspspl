@@ -6,6 +6,7 @@ use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
 use Facebook\WebDriver\Remote;
+use Facebook\WebDriver\Chrome;
 use yii\base\Exception;
 use common\models\Game;
 
@@ -17,9 +18,13 @@ class ScrappingController extends Controller
         // $capabilities = Remote\DesiredCapabilities::chrome('chromeOptions', ['args' => ['--headless']]);
 
         // https://askubuntu.com/questions/693520/running-xvfb-with-firefox
-        $capabilities = Remote\DesiredCapabilities::firefox();
-        $capabilities->setCapability(Remote\WebDriverCapabilityType::JAVASCRIPT_ENABLED, false);
-        $driver = Remote\RemoteWebDriver::create($host, $capabilities, 60000, 60000);
+        $chromeOptions = new Chrome\ChromeOptions();
+        $chromeOptions->addArguments(['--no-sandbox', '--headless', 'window-size=1024,768']);
+        $desiredCapabilities = Remote\DesiredCapabilities::chrome();
+        $desiredCapabilities->setCapability(Chrome\ChromeOptions::CAPABILITY, $chromeOptions);
+        // $capabilities = Remote\DesiredCapabilities::firefox();
+        // $capabilities->setCapability(Remote\WebDriverCapabilityType::JAVASCRIPT_ENABLED, false);
+        $driver = Remote\RemoteWebDriver::create($host, $desiredCapabilities, 60000, 60000);
         // $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/3768/Stages/10274/Fixtures/International-FIFA-World-Cup-2014');
         $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
         $pageSource = $driver->getPageSource();
