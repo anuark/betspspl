@@ -63,8 +63,8 @@ const flag = {
     'Russia': rus,
     'Senegal': sen,
     'Serbia': srb,
-    'Sweden': sui,
-    'Switzerland': swe,
+    'Sweden': swe,
+    'Switzerland': sui,
     'Tunisia': tun,
     'Uruguay': uru
 }
