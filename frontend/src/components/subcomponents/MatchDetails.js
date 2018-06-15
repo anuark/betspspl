@@ -179,7 +179,7 @@ class MatchDetails extends Component {
                             <div>
                                 <div className="info">Ganadores<img className='info-icon' alt='trophy' src={trophy}/></div>
                                 <div className="info winners">
-                                    { this.state.loading ? 'Cargando...' : listWinners}
+                                    { this.state.loading ? 'Cargando...' : ( winners.length === 0 ? 'No hay ganadores.' : listWinners)}
                                 </div>
                             </div>
                         :
