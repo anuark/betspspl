@@ -102,4 +102,19 @@ class ScrappingController extends Controller
             }
         }
     }
+
+    public function actionFixTimes()
+    {
+        $games = Game::find()->all();
+        foreach ($games as $game) {
+            if (in_array($game->id, [65, 66, 67, 68])) {
+                continue;
+            }
+
+            $dateTime = new \DateTime($game->date, new \DateTimeZone('Europe/London'));
+            $dateTime->setTimeZone(new \DateTimeZone('America/Tegucigalpa'));
+            $game->date = $dateTime->format('Y-m-d H:i:s');
+            $game->update(false, ['date']);
+        }
+    }
 }
