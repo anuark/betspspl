@@ -34,6 +34,8 @@ return [
         'setWritable' => [
             'api/runtime',
             'api/web/assets',
+            'console/runtime',
+            'console/runtime/files',
         ],
         'setExecutable' => [
             'yii',
@@ -48,6 +50,8 @@ return [
         'setWritable' => [
             'api/runtime',
             'api/web/assets',
+            'console/runtime',
+            'console/runtime/files',
         ],
         'setExecutable' => [
             'yii',

@@ -11,14 +11,23 @@ use common\models\Game;
 
 class ScrappingController extends Controller
 {
+    public function actionCron()
+    {
+        $file = Yii::getAlias('@runtime/files/'.time().'.html');
+        $this->actionIndex($file);
+        $this->actionParse($file);
+        unlink($file);
+    }
+
     public function actionIndex($fileName = null)
     {
-        // $req = Yii::$app->whoScoredClient->get('5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
-        // $res = Yii::$app->whoScoredClient->send($req);
-        // Console::output($res->data);
         $host = 'http://localhost:4444/wd/hub';
-        $chromeDesiredCaps = Remote\DesiredCapabilities::chrome('chromeOptions', ['args' => ['--headless']]);
-        $driver = Remote\RemoteWebDriver::create($host, $chromeDesiredCaps);
+        // $capabilities = Remote\DesiredCapabilities::chrome('chromeOptions', ['args' => ['--headless']]);
+
+        // https://askubuntu.com/questions/693520/running-xvfb-with-firefox
+        $capabilities = Remote\DesiredCapabilities::firefox();
+        $capabilities->setCapability(Remote\WebDriverCapabilityType::JAVASCRIPT_ENABLED, false);
+        $driver = Remote\RemoteWebDriver::create($host, $capabilities, 60000, 60000);
         // $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/3768/Stages/10274/Fixtures/International-FIFA-World-Cup-2014');
         $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
         $pageSource = $driver->getPageSource();
@@ -86,6 +95,11 @@ class ScrappingController extends Controller
             }
 
             $game = Game::find()->where(['date' => $finalDateTime, 'local_team' => $homeTeam, 'away_team' => $awayTeam])->one();
+
+            if ($game->status == Game::STATUS_PLAYED) {
+                continue;
+            }
+
             if (!$game) {
                 $game = new Game([
                     'date' => $finalDateTime,
