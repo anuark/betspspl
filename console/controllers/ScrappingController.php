@@ -37,6 +37,7 @@ class ScrappingController extends Controller
             file_put_contents($file, $pageSource);
             $this->actionParse($file);
             $driver->navigate()->refresh();
+            unlink($file);
             sleep(10);
         }
 
