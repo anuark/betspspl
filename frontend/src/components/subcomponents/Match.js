@@ -82,10 +82,10 @@ class Match extends Component {
                     </div>
                     <div className="col col-6">
                         <div>
-                            <img className="flag" src={flag[info.local_team]} alt="home" /> {info.local_team}
+                            <img className="flag" src={flag[info.local_team]} alt="home" /> {info.local_team_es}
                         </div>
                         <div>
-                            <img className="flag" src={flag[info.away_team]} alt="away" /> {info.away_team}
+                            <img className="flag" src={flag[info.away_team]} alt="away" /> {info.away_team_es}
                         </div>
                     </div>
                     <div className='col col-1 info score'>

@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Matches from './components/Matches';
 import MatchesDetails from './components/MatchesDetails';
 import Stats from './components/Stats';
+import Profile from './components/Profile';
 import { Route } from 'react-router-dom';
 import './css/App.css';
 
@@ -155,6 +156,7 @@ class App extends Component {
                     <Route exact path='/' render={(props)=><Matches {...props} refresh={this.getGames} games={this.state.games}/>}/>
                     <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.getGames} games={this.state.games} betFor={this.betFor}/>}/>
                     <Route exact path='/score' render={(props)=><Stats {...props} />} />
+                    <Route path='/profile/:id' render={(props)=><Profile {...props} />} />
                 </div>
             );
         } else {

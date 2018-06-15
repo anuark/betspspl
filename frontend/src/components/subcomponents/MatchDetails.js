@@ -122,11 +122,15 @@ class MatchDetails extends Component {
             this.props.betFor(data);
         }
     };
+    goToProfile = (e) => {
+        let id = e.target.getAttribute('userid');
+        this.props.history.push('/profile/'+id);
+    };
     render() {
         const info = this.props.info;
         const winners = this.state.winners;
         const listWinners = winners.map((u, i) =>
-            <img className='winner-icon' alt='winner' src={u.google_img_path}/>
+            <img key={u.id} className='winner-icon' alt='winner' userid={u.id} onClick={this.goToProfile} src={u.google_img_path}/>
         );
         if (info !== null) {
             return (
@@ -145,13 +149,13 @@ class MatchDetails extends Component {
                     </div>
                     <div className="teams">
                         <div className="col col-1 text-center">
-                            {info.local_team}
+                            {info.local_team_es}
                         </div>
                         <div className="col col-1 as-center text-center">
                             Empate
                         </div>
                         <div className="col col-1 text-center">
-                            {info.away_team}
+                            {info.away_team_es}
                         </div>
                     </div>
                     {
