@@ -38,3 +38,4 @@ phpunit.phar
 
 #frontend ignore
 /frontend/node_modules
+/api/web/scrapper/node_modules

@@ -1,0 +1,15 @@
+{
+  "name": "scrap_fifa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "script": "node example.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^1.5.0"
+  }
+}

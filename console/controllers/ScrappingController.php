@@ -12,36 +12,20 @@ use common\models\Game;
 
 class ScrappingController extends Controller
 {
-    public function actionIndex($fileName = null)
+    public function actionCron()
     {
-        $host = 'http://localhost:4444/wd/hub';
-        // $capabilities = Remote\DesiredCapabilities::chrome('chromeOptions', ['args' => ['--headless']]);
-
-        // https://askubuntu.com/questions/693520/running-xvfb-with-firefox
-        $chromeOptions = new Chrome\ChromeOptions();
-        $chromeOptions->addArguments(['--no-sandbox', '--headless', 'window-size=1024,768']);
-        $desiredCapabilities = Remote\DesiredCapabilities::chrome();
-        $desiredCapabilities->setCapability(Chrome\ChromeOptions::CAPABILITY, $chromeOptions);
-        // $capabilities = Remote\DesiredCapabilities::firefox();
-        // $capabilities->setCapability(Remote\WebDriverCapabilityType::JAVASCRIPT_ENABLED, false);
-        $driver = Remote\RemoteWebDriver::create($host, $desiredCapabilities, 60000, 60000);
-        // $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/3768/Stages/10274/Fixtures/International-FIFA-World-Cup-2014');
-        $driver->get('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
-        $pageSource = $driver->getPageSource();
-        if (!$fileName) {
-            $fileName = 'whoscored.com.2018.html';
-        }
-
         while (1) {
-            $file = Yii::getAlias('@runtime/files/'.time().'.html');
-            file_put_contents($file, $pageSource);
-            $this->actionParse($file);
-            $driver->navigate()->refresh();
-            unlink($file);
-            sleep(10);
+            $req = Yii::$app->http->get('http://localhost:3000');
+            $res = Yii::$app->http->send($req);
+            if (!$res->ok) {
+                throw new Exception('Could\'t connect to scrapper server');
+            }
+            $filePath = Yii::getAlias('@runtime/files/'.time().'.html');
+            file_put_contents($filePath, $res->data);
+            $this->actionParse($filePath);
+            unlink($filePath);
+            sleep(60);
         }
-
-        $driver->quit();
     }
 
     public function actionParse($fileName = null)
@@ -100,10 +84,6 @@ class ScrappingController extends Controller
 
             $game = Game::find()->where(['date' => $finalDateTime, 'local_team' => $homeTeam, 'away_team' => $awayTeam])->one();
 
-            if ($game->status == Game::STATUS_PLAYED) {
-                continue;
-            }
-
             if (!$game) {
                 $game = new Game([
                     'date' => $finalDateTime,
@@ -112,27 +92,16 @@ class ScrappingController extends Controller
                 ]);
             }
 
+            if ($game->status == Game::STATUS_PLAYED) {
+                continue;
+            }
+
             $game->result = $result == 'vs' ? null : $result;
             $game->status = $finalStatus;
 
             if (!$game->save()) {
                 throw new Exception($game->errors);
             }
-        }
-    }
-
-    public function actionFixTimes()
-    {
-        $games = Game::find()->all();
-        foreach ($games as $game) {
-            if (in_array($game->id, [65, 66, 67, 68])) {
-                continue;
-            }
-
-            $dateTime = new \DateTime($game->date, new \DateTimeZone('Europe/London'));
-            $dateTime->setTimeZone(new \DateTimeZone('America/Tegucigalpa'));
-            $game->date = $dateTime->format('Y-m-d H:i:s');
-            $game->update(false, ['date']);
         }
     }
 }
