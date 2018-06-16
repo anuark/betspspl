@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const http = require('http');
 
 const getHtml = (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
     await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
     await page.screenshot({path: 'example.png'});

@@ -17,7 +17,7 @@ class ScrappingController extends Controller
         while (1) {
             $req = Yii::$app->http->get('http://localhost:3000');
             $res = Yii::$app->http->send($req);
-            if (!$res->ok) {
+            if (!$res->isOk) {
                 throw new Exception('Could\'t connect to scrapper server');
             }
             $filePath = Yii::getAlias('@runtime/files/'.time().'.html');
