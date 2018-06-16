@@ -14,18 +14,15 @@ class ScrappingController extends Controller
 {
     public function actionCron()
     {
-        while (1) {
-            $req = Yii::$app->http->get('http://localhost:3000');
-            $res = Yii::$app->http->send($req);
-            if (!$res->isOk) {
-                throw new Exception('Could\'t connect to scrapper server');
-            }
-            $filePath = Yii::getAlias('@runtime/files/'.time().'.html');
-            file_put_contents($filePath, $res->data);
-            $this->actionParse($filePath);
-            unlink($filePath);
-            sleep(60);
+        $req = Yii::$app->http->get('http://localhost:3000');
+        $res = Yii::$app->http->send($req);
+        if (!$res->isOk) {
+            throw new Exception('Could\'t connect to scrapper server');
         }
+        $filePath = Yii::getAlias('@runtime/files/'.time().'.html');
+        file_put_contents($filePath, $res->toString());
+        $this->actionParse($filePath);
+        unlink($filePath);
     }
 
     public function actionParse($fileName = null)

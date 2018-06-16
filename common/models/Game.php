@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "game".
@@ -26,6 +27,20 @@ class Game extends \yii\db\ActiveRecord
         $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'betWon']);
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return date('Y-m-d H:i:s');
+                },
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +56,7 @@ class Game extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'required'],
-            [['date'], 'safe'],
+            [['date', 'created_at', 'updated_at'], 'safe'],
             [['local_team', 'away_team', 'status'], 'string', 'max' => 50],
             ['status', 'in', 'range' => [self::STATUS_TO_BE_PLAYED, self::STATUS_PLAYING, self::STATUS_PLAYED]],
             [['result'], 'string', 'max' => 5],
