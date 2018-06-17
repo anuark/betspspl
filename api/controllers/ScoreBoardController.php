@@ -22,6 +22,6 @@ class ScoreBoardController extends Controller
 
     public function actionIndex()
     {
-        return ScoreBoard::find()->all();
+        return ScoreBoard::find()->orderBy('points DESC')->all();
     }
 }
