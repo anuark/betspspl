@@ -95,7 +95,9 @@ class ScrappingController extends Controller
 
             $game->result = $result == 'vs' ? null : $result;
             $game->status = $finalStatus;
-            $game->match_minute = $matchMinute;
+            if ($matchMinute) {
+                $game->match_minute = $matchMinute;
+            }
 
             if (!$game->save()) {
                 throw new Exception($game->errors);
