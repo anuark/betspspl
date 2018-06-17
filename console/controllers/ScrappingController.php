@@ -58,7 +58,7 @@ class ScrappingController extends Controller
                         $result = preg_replace("/\s+/", "", $child2->nodeValue);
                     }
                     if (stripos($child2->getAttribute('class'), 'status') !== false) {
-                        $status = $child2->nodeValue;
+                        $matchMinute = $child2->nodeValue;
                     }
                 }
             }
@@ -71,7 +71,7 @@ class ScrappingController extends Controller
             $finalDateTime = $dateTime->format('Y-m-d H:i:s');
 
             date_default_timezone_set('America/Tegucigalpa');
-            if ($status == 'FT') {
+            if ($matchMinute == 'FT') {
                 $finalStatus = Game::STATUS_PLAYED;
             } elseif(time() > strtotime($finalDateTime)) {
                 $finalStatus = Game::STATUS_PLAYING;
@@ -95,6 +95,7 @@ class ScrappingController extends Controller
 
             $game->result = $result == 'vs' ? null : $result;
             $game->status = $finalStatus;
+            $game->match_minute = $matchMinute;
 
             if (!$game->save()) {
                 throw new Exception($game->errors);

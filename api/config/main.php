@@ -40,15 +40,20 @@ return [
                         'OPTIONS /' => 'index',
                         'GET,OPTIONS {id}/winners' => 'winners'
                     ]
-                    // 'patterns' => [
-                        // 'GET,OPTIONS index' => 'index'
-                    // ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'bet',
                     'extraPatterns' => [
                         'OPTIONS /' => 'index'
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'pluralize' => false,
+                    'controller' => 'score-board',
+                    'patterns' => [
+                        'GET,OPTIONS /' => 'index'
                     ]
                 ],
             ],

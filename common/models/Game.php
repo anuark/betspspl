@@ -56,7 +56,7 @@ class Game extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'required'],
-            [['date', 'created_at', 'updated_at'], 'safe'],
+            [['date', 'created_at', 'updated_at', 'match_minute'], 'safe'],
             [['local_team', 'away_team', 'status'], 'string', 'max' => 50],
             ['status', 'in', 'range' => [self::STATUS_TO_BE_PLAYED, self::STATUS_PLAYING, self::STATUS_PLAYED]],
             [['result'], 'string', 'max' => 5],
@@ -116,6 +116,8 @@ class Game extends \yii\db\ActiveRecord
                         ]
                     );
                 }
+
+                ScoreBoard::updateBoard();
             }
         }
     }
@@ -124,5 +126,14 @@ class Game extends \yii\db\ActiveRecord
     {
         date_default_timezone_set('America/Tegucigalpa');
         return time() > strtotime($this->date);
+    }
+
+    public function setPointsForUser($userId) 
+    {
+        $this->points = (int) (new Query())
+            ->select('SUM(asserted)')
+            ->from('bet')
+            ->where(['user_id' => $user->id])
+            ->scalar();
     }
 }
