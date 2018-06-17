@@ -4,7 +4,7 @@ namespace api\controllers;
 
 use Yii;
 use yii\rest\Controller;
-use common\models\ScoreBoard;
+use api\models\ScoreBoard;
 
 class ScoreBoardController extends Controller
 {
