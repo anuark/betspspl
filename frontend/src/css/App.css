@@ -268,3 +268,14 @@ body {
     transform: rotate(359deg);
   }
 }
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.userImage {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  border-radius: 20px;
+  margin-right: 8px;
+}

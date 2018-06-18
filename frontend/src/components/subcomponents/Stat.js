@@ -18,6 +18,9 @@ class Stats extends Component {
             });
         }
     };
+    goToProfile = (e) => {
+        this.props.history.push('/profile/'+this.props.id);
+    };
     render() {
         return (
             <div className="Match table">
@@ -28,7 +31,8 @@ class Stats extends Component {
                     <div className="col col-1 text-center">
                         <img className='pos' src={this.props.pos === 0 ? same : (this.props.pos === 1 ? up : down)} alt='pos' />
                     </div>
-                    <div className={this.state.you ? "col col-6 text-bold" : "col col-6"}>
+                    <div onClick={this.goToProfile} className={this.state.you ? "row center-center col-6 text-bold" : "row center-center col-6"}>
+                        <img className='userImage' src={this.props.img} alt='jugador' />
                         {this.state.you ? (this.props.name + ' (tu)') : this.props.name}
                     </div>
                     <div className='col col-2 text-center text-bold'>

@@ -27,7 +27,7 @@ class Stats extends Component {
     render() {
         const stats = this.state.stats;
         const listPlayers = stats.map((u, i) =>
-            <Stat key={u.user_id} id={u.user_id} num={i+1} name={u.username} points={u.points} pos={u.pos} />
+            <Stat key={u.user_id} history={this.props.history} id={u.user_id} img={u.user_img} num={i+1} name={u.username} points={u.points} pos={u.pos} />
         );
         return (
             <div className="Matches content">
