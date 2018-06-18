@@ -74,7 +74,7 @@ class Match extends Component {
     render() {
         const info = this.props.info;
         return (
-            <div className="Match" onClick={this.goToMatch}>
+            <div ref={'game_'+info.id} id={'game_'+info.id} className="Match" onClick={this.goToMatch}>
                 <div className="info">{info.msg}<img className='status-icon' alt='status' src={info.ico}/></div>
                 <div className="teams">
                     <div className="col col-1 as-center text-center info">
