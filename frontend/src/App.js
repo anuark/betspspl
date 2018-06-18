@@ -125,7 +125,7 @@ class App extends Component {
     };
     logOut = () => {
         localStorage.setItem('guser', null);
-        localStorage.setItem('userID', null);
+        localStorage.setItem('userId', null);
         localStorage.setItem('token', null);
         this.setState({
             googleData: null,
