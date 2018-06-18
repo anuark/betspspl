@@ -146,6 +146,8 @@ class MatchDetails extends Component {
                         </div>
                         <div className="col col-1 as-center text-center text-bold">
                             {info.status !== 'to be played' ? info.result : info.time}
+                            <br/>
+                            {info.match_minute === null ? 'FT' : info.match_minute}
                         </div>
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.away_team]} alt="home" />

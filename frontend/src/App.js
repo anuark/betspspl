@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTimeout from 'react-timeout'
 import alarm from './assets/not-played.png';
 import wow from './assets/bet.png';
 import soccer from './assets/playing.png';
@@ -40,6 +41,13 @@ class App extends Component {
                     this.authToMyServer(guser.profileObj);
                 });
         }
+        this.props.setTimeout(this.realTime, 60000);
+    };
+    realTime = () => {
+        if (this.state.online) {
+            this.getGames();
+        }
+        this.props.setTimeout(this.realTime, 60000);
     };
     getGames = () => {
         let opt = {
@@ -172,7 +180,7 @@ class App extends Component {
             return (
                 <div className="App">
                     <Route path='/' render={(props)=><Login {...props} points={this.state.points} logOut={this.logOut} fail={this.responseGoogleFail} success={this.responseGoogleSuccess} online={this.state.online} user={this.state.profile} />}/>
-                    <Route exact path='/' render={(props)=><Matches {...props} refresh={this.getGames} games={this.state.games}/>}/>
+                    <Route exact path='/' render={(props)=> this.state.games.length > 0 ? <Matches {...props} refresh={this.getGames} games={this.state.games}/> : <div className="Matches content"><div className='info-date'>Cargando...</div></div> }/>
                     <Route path='/match/:date' render={(props)=><MatchesDetails {...props} refresh={this.getGames} games={this.state.games} betFor={this.betFor}/>}/>
                     <Route exact path='/score' render={(props)=><Stats {...props} />} />
                     <Route path='/profile/:id' render={(props)=><Profile {...props} />} />
@@ -188,4 +196,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default ReactTimeout(App);
