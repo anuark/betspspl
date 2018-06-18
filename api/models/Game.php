@@ -12,6 +12,7 @@ class Game extends \common\models\Game
     public $bet_for_local;
     public $bet_for_away;
     public $bet_for_draw;
+    public $row;
 
     const esTeamNames = [
         'Argentina' => 'Argentina',
@@ -77,6 +78,9 @@ class Game extends \common\models\Game
         };
         $fields['away_team_es'] = function ($model) {
             return self::esTeamNames[$model->away_team];
+        };
+        $fields['row'] = function ($model) {
+            return $model->row;
         };
 
         return $fields;

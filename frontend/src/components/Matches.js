@@ -12,7 +12,7 @@ class Matches extends Component {
     render() {
         const games = this.props.games;
         const listGames = games.map((game, index) =>
-            <div key={game.id}>
+            <div key={game.row}>
                 {game.first ? <div className='info-date'>{game.date}</div> : ''}
                 <Match goTo={this.goToMatch} id={game.id} info={game}/>
             </div>

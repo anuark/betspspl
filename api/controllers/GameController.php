@@ -24,6 +24,7 @@ class GameController extends Controller
 
     public function actionIndex()
     {
+        Yii::$app->db->createCommand("SET @row=0;")->execute();
         return Game::find()
             ->select([
                 'game.*',
@@ -31,7 +32,8 @@ class GameController extends Controller
                 'IF(b.id IS NOT NULL, b.asserted, 0) AS asserted',
                 'b.bet_for_local',
                 'b.bet_for_draw',
-                'b.bet_for_away'
+                'b.bet_for_away',
+                '(@row:=@row+1) AS row'
             ])
             ->leftJoin('bet b', 'b.game_id = game.id AND b.user_id = '.Yii::$app->user->id)
             ->all();
