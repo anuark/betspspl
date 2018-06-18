@@ -94,8 +94,6 @@ class MatchDetails extends Component {
                 winners: res.data,
                 loading: false
             });
-        }).catch(err => {
-            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     setActive = (e) => {
@@ -146,6 +144,8 @@ class MatchDetails extends Component {
                         </div>
                         <div className="col col-1 as-center text-center text-bold">
                             {info.status !== 'to be played' ? info.result : info.time}
+                            {info.status !== 'to be played' ? <br/> : ''}
+                            {info.status !== 'to be played' ? '90m' : ''}
                         </div>
                         <div className="col col-1 text-center">
                             <img className="flag" src={flag[info.away_team]} alt="home" />
@@ -165,18 +165,15 @@ class MatchDetails extends Component {
                     {
                         info.status === 'to be played' ?
                             <div className="teams">
-                                <div id='home' onClick={this.setActive} className={info.bet_for_local === '1' ? 'col col-1 button text-center active' : 'col col-1 button text-center'}>
-                                </div>
-                                <div id='tie' onClick={this.setActive} className={info.bet_for_draw === '1' ? 'col col-1 button text-center active' : 'col col-1 button text-center'}>
-                                </div>
-                                <div id='away' onClick={this.setActive} className={info.bet_for_away === '1' ? 'col col-1 button text-center active' : 'col col-1 button text-center'}>
-                                </div>
+                                <div id='home' onClick={this.setActive} className={info.bet_for_local === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                                <div id='tie' onClick={this.setActive} className={info.bet_for_draw === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
+                                <div id='away' onClick={this.setActive} className={info.bet_for_away === '1' ? 'col col-1 button active' : 'col col-1 button'}></div>
                             </div>
                         :
                             <div className="teams">
-                                <div id='home' className={info.bet_for_local === '1' ? 'col col-1 button text-center disabled active' : 'col col-1 disabled button text-center'}></div>
-                                <div id='tie' className={info.bet_for_draw === '1' ? 'col col-1 button text-center disabled active' : 'col col-1 disabled button text-center'}></div>
-                                <div id='away' className={info.bet_for_away === '1' ? 'col col-1 button text-center disabled active' : 'col col-1 disabled button text-center'}></div>
+                                <div id='home' className={info.bet_for_local === '1' ? 'col col-1 button disabled active' : 'col col-1 disabled button'}></div>
+                                <div id='tie' className={info.bet_for_draw === '1' ? 'col col-1 button disabled active' : 'col col-1 disabled button'}></div>
+                                <div id='away' className={info.bet_for_away === '1' ? 'col col-1 button disabled active' : 'col col-1 disabled button'}></div>
                             </div>
                     }
                     {

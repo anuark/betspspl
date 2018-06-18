@@ -255,3 +255,28 @@ body {
         width: 16px;
     }
 }
+.spinner {
+    width: 30%;
+    margin-top: 22px;
+    animation-name: loading;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(359deg);}
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.userImage{
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    border-radius: 20px;
+    margin-right: 8px;
+}

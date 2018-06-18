@@ -52,6 +52,8 @@ class App extends Component {
         };
         axios(opt).then(res => {
             this.refreshDev(res.data);
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     refreshDev = (data) => {
@@ -116,6 +118,8 @@ class App extends Component {
                 this.setState({
                     points: res.data.points
                 });
+            }).catch(err => {
+                alert('Error de conexión. Comunicarse con Anuar.');
             });
     };
     responseGoogleFail = (response) => {
@@ -125,7 +129,7 @@ class App extends Component {
     };
     logOut = () => {
         localStorage.setItem('guser', null);
-        localStorage.setItem('userID', null);
+        localStorage.setItem('userId', null);
         localStorage.setItem('token', null);
         this.setState({
             googleData: null,
@@ -142,9 +146,12 @@ class App extends Component {
                 c.bet_for_away = data.bet_for_away.toString();
                 c.bet_for_local = data.bet_for_local.toString();
                 c.bet_for_draw = data.bet_for_draw.toString();
+                this.setBetMsg(c);
             }
         }
-        this.refreshDev(gameData);
+        this.setState({
+            games: gameData
+        });
         let opt = {
             method: 'POST',
             url: 'https://bet-api.sps-pl.com/bets',
@@ -156,6 +163,8 @@ class App extends Component {
         };
         axios(opt).then(res=>{
             this.getGames();
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     render() {
