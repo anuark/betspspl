@@ -142,9 +142,13 @@ class App extends Component {
                 c.bet_for_away = data.bet_for_away.toString();
                 c.bet_for_local = data.bet_for_local.toString();
                 c.bet_for_draw = data.bet_for_draw.toString();
+                c.loadingBet = true;
+                this.setBetMsg(c);
             }
         }
-        this.refreshDev(gameData);
+        this.setState({
+            games: gameData
+        });
         let opt = {
             method: 'POST',
             url: 'https://bet-api.sps-pl.com/bets',
