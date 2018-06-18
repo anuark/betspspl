@@ -20,6 +20,14 @@ class Matches extends Component {
                     elmnt.scrollIntoView(true);
                     body.scrollTop -= 115;
                     html.scrollTop -= 115;
+                } else if (g.status === 'to be played') {
+                    found = true;
+                    let elmnt = document.getElementById('game_'+g.id);
+                    let body = document.body;
+                    let html = document.documentElement;
+                    elmnt.scrollIntoView(true);
+                    body.scrollTop -= 115;
+                    html.scrollTop -= 115;
                 }
             }
         }
