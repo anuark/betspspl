@@ -34,6 +34,8 @@ class Stats extends Component {
                     });
                 }
             }
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     render() {

@@ -22,6 +22,8 @@ class Stats extends Component {
             this.setState({
                 stats: res.data
             });
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     render() {

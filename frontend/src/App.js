@@ -52,6 +52,8 @@ class App extends Component {
         };
         axios(opt).then(res => {
             this.refreshDev(res.data);
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     refreshDev = (data) => {
@@ -116,6 +118,8 @@ class App extends Component {
                 this.setState({
                     points: res.data.points
                 });
+            }).catch(err => {
+                alert('Error de conexión. Comunicarse con Anuar.');
             });
     };
     responseGoogleFail = (response) => {
@@ -142,7 +146,6 @@ class App extends Component {
                 c.bet_for_away = data.bet_for_away.toString();
                 c.bet_for_local = data.bet_for_local.toString();
                 c.bet_for_draw = data.bet_for_draw.toString();
-                c.loadingBet = true;
                 this.setBetMsg(c);
             }
         }
@@ -160,6 +163,8 @@ class App extends Component {
         };
         axios(opt).then(res=>{
             this.getGames();
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     render() {

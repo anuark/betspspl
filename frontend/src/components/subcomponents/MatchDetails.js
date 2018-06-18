@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import trophy from '../../assets/trophy.png';
-import ball from '../../assets/playing.png';
 import arg from '../../assets/flags/arg.png';
 import aus from '../../assets/flags/aus.png';
 import bel from '../../assets/flags/bel.png';
@@ -95,6 +94,8 @@ class MatchDetails extends Component {
                 winners: res.data,
                 loading: false
             });
+        }).catch(err => {
+            alert('Error de conexión. Comunicarse con Anuar.');
         });
     };
     setActive = (e) => {
@@ -165,28 +166,10 @@ class MatchDetails extends Component {
                         info.status === 'to be played' ?
                             <div className="teams">
                                 <div id='home' onClick={this.setActive} className={info.bet_for_local === '1' ? 'col col-1 button text-center active' : 'col col-1 button text-center'}>
-                                    {
-                                        (info.bet_for_local === '1' && info.loadingBet === true) ?
-                                            <img className='spinner' src={ball} alt='spinner' />
-                                        :
-                                            ''
-                                    }
                                 </div>
                                 <div id='tie' onClick={this.setActive} className={info.bet_for_draw === '1' ? 'col col-1 button text-center active' : 'col col-1 button text-center'}>
-                                    {
-                                        (info.bet_for_draw === '1' && info.loadingBet === true) ?
-                                            <img className='spinner' src={ball} alt='spinner' />
-                                        :
-                                            ''
-                                    }
                                 </div>
                                 <div id='away' onClick={this.setActive} className={info.bet_for_away === '1' ? 'col col-1 button text-center active' : 'col col-1 button text-center'}>
-                                    {
-                                        (info.bet_for_away === '1' && info.loadingBet === true) ?
-                                            <img className='spinner' src={ball} alt='spinner' />
-                                        :
-                                            ''
-                                    }
                                 </div>
                             </div>
                         :
