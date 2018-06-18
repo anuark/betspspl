@@ -78,7 +78,7 @@ class Match extends Component {
                 <div className="info">{info.msg}<img className='status-icon' alt='status' src={info.ico}/></div>
                 <div className="teams">
                     <div className="col col-1 as-center text-center info">
-                        {info.id}.
+                        {info.row}.
                     </div>
                     <div className="col col-6">
                         <div>
