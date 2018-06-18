@@ -25,7 +25,7 @@ class GameController extends Controller
     public function actionIndex()
     {
         Yii::$app->db->createCommand("SET @row=0;")->execute();
-        return Game::find()
+        $query = Game::find()
             ->select([
                 'game.*',
                 'IF(b.id IS NOT NULL, 1, 0) AS has_bet',
@@ -35,8 +35,14 @@ class GameController extends Controller
                 'b.bet_for_away',
                 '(@row:=@row+1) AS row'
             ])
-            ->leftJoin('bet b', 'b.game_id = game.id AND b.user_id = '.Yii::$app->user->id)
-            ->all();
+            ->leftJoin('bet b', 'b.game_id = game.id AND b.user_id = '.Yii::$app->user->id);
+
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false
+        ]);
+
+        return $dataProvider;
     }
 
     public function actionWinners($id)

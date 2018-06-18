@@ -79,13 +79,13 @@ class App extends Component {
         if (game.status === 'to be played') {
             if (game.bet_for_away === '1') {
                 game.ico = wow;
-                game.msg = 'Apostaste por ' + game.away_team;
+                game.msg = 'Apostastes por ' + game.away_team_es;
             } else if (game.bet_for_local === '1') {
                 game.ico = wow;
-                game.msg = 'Apostaste por ' + game.local_team;
+                game.msg = 'Apostastes por ' + game.local_team_es;
             } else if (game.bet_for_draw === '1') {
                 game.ico = wow;
-                game.msg = 'Apostaste por el empate';
+                game.msg = 'Apostastes por el empate';
             } else {
                 game.ico = alarm;
                 game.msg = 'No has hecho apuesta';
