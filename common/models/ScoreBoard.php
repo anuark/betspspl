@@ -93,10 +93,10 @@ class ScoreBoard extends \yii\db\ActiveRecord
                 continue;
             }
 
-            $scoreboard = self::findOne(['user_id' => $userId]);
+            $scoreboard = self::findOne(['user_id' => $user->id]);
             if (!$scoreboard) {
                 $scoreboard = new static([
-                    'user_id' => $userId,
+                    'user_id' => $user->id,
                 ]);
             }
 
