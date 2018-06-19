@@ -29,7 +29,7 @@ class Stats extends Component {
                         {this.props.num}
                     </div>
                     <div className="col col-1 text-center">
-                        <img className='pos' src={this.props.pos === 0 ? same : (this.props.pos === 1 ? up : down)} alt='pos' />
+                        <img className='pos' src={this.props.pos === 0 ? same : (this.props.pos > 0 ? up : down)} alt='pos' />
                     </div>
                     <div onClick={this.goToProfile} className={this.state.you ? "row center-center col-6 text-bold" : "row center-center col-6"}>
                         <img className='userImage' src={this.props.img} alt='jugador' />
