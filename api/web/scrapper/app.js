@@ -7,15 +7,15 @@ var browser;
 (async () => {
     browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
-    await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
+    // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/15737/Fixtures/International-FIFA-World-Cup-2018');
     // await page.screenshot({path: 'example.png'});
-    let groupStage = await page.evaluate(() => document.body.innerHTML);
+    // let groupStage = await page.evaluate(() => document.body.innerHTML);
 
-    await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12759/Fixtures/International-FIFA-World-Cup-2018');
-    let round16 = await page.evaluate(() => document.body.innerHTML);
+    // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12759/Fixtures/International-FIFA-World-Cup-2018');
+    // let round16 = await page.evaluate(() => document.body.innerHTML);
 
-    // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12760/Fixtures/International-FIFA-World-Cup-2018');
-    // let quarter = await page.evaluate(() => document.body.innerHTML);
+    await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12760/Fixtures/International-FIFA-World-Cup-2018');
+    let quarter = await page.evaluate(() => document.body.innerHTML);
 
     // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12761/Fixtures/International-FIFA-World-Cup-2018');
     // let semiFinal = await page.evaluate(() => document.body.innerHTML);
@@ -29,9 +29,9 @@ var browser;
     await browser.close();
 
     let sources = [
-        groupStage,
-        round16,
-        // quarter,
+        // groupStage,
+        // round16,
+        quarter,
         // semiFinal,
         // bronze,
         // final
