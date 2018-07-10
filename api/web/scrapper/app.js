@@ -31,10 +31,10 @@ var browser;
     let sources = [
         // groupStage,
         // round16,
-        quarter,
-        // semiFinal,
-        // bronze,
-        // final
+        // quarter,
+        semiFinal,
+        bronze,
+        final
     ];
 
     for (let i = 0; i < sources.length; i++) {
