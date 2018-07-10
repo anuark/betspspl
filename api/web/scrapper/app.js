@@ -17,14 +17,14 @@ var browser;
     await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12760/Fixtures/International-FIFA-World-Cup-2018');
     let quarter = await page.evaluate(() => document.body.innerHTML);
 
-    // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12761/Fixtures/International-FIFA-World-Cup-2018');
-    // let semiFinal = await page.evaluate(() => document.body.innerHTML);
+    await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12761/Fixtures/International-FIFA-World-Cup-2018');
+    let semiFinal = await page.evaluate(() => document.body.innerHTML);
 
-    // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12761/Fixtures/International-FIFA-World-Cup-2018');
-    // let bronze = await page.evaluate(() => document.body.innerHTML);
+    await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12761/Fixtures/International-FIFA-World-Cup-2018');
+    let bronze = await page.evaluate(() => document.body.innerHTML);
 
-    // await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12762/Fixtures/International-FIFA-World-Cup-2018');
-    // let final = await page.evaluate(() => document.body.innerHTML);
+    await page.goto('https://www.whoscored.com/Regions/247/Tournaments/36/Seasons/5967/Stages/12762/Fixtures/International-FIFA-World-Cup-2018');
+    let final = await page.evaluate(() => document.body.innerHTML);
 
     await browser.close();
 
