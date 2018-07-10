@@ -127,14 +127,4 @@ class Game extends \yii\db\ActiveRecord
         date_default_timezone_set('America/Tegucigalpa');
         return time() > strtotime($this->date);
     }
-
-    public function setPointsForUser($userId) 
-    {
-        $this->points = (int) (new Query())
-            ->select('SUM(asserted)+SUM(g.is_extra_point)')
-            ->from('bet b')
-            ->innerJoin('game g', 'b.game_id = g.id')
-            ->where(['user_id' => $userid])
-            ->scalar();
-    }
 }

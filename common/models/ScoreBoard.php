@@ -75,10 +75,10 @@ class ScoreBoard extends \yii\db\ActiveRecord
     public function setPointsToUser()
     {
         $this->points = (int) (new Query())
-            ->select('SUM(asserted)')
-            ->from('bet')
-            ->where(['user_id' => $this->user_id])
-            // ->andFilterWhere(['<=', 'game_id', $this->last_game_id])
+            ->select('SUM(asserted)+SUM(g.is_extra_point)')
+            ->from('bet b')
+            ->innerJoin('game g', 'b.game_id = g.id')
+            ->where(['user_id' => $this->user_id, 'b.asserted' => 1])
             ->scalar();
     }
 

@@ -16,7 +16,7 @@ class User extends \common\models\User
                 ->select('SUM(asserted)+SUM(g.is_extra_point)')
                 ->from('bet b')
                 ->innerJoin('game g', 'b.game_id = g.id')
-                ->where(['user_id' => $model->id])
+                ->where(['user_id' => $model->id, 'b.asserted' => 1])
                 ->scalar();
         };
 
