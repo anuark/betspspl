@@ -56,7 +56,7 @@ class Game extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'required'],
-            [['date', 'created_at', 'updated_at', 'match_minute'], 'safe'],
+            [['date', 'created_at', 'updated_at', 'match_minute', 'is_extra_point'], 'safe'],
             [['local_team', 'away_team', 'status'], 'string', 'max' => 50],
             ['status', 'in', 'range' => [self::STATUS_TO_BE_PLAYED, self::STATUS_PLAYING, self::STATUS_PLAYED]],
             [['result'], 'string', 'max' => 5],
@@ -131,9 +131,10 @@ class Game extends \yii\db\ActiveRecord
     public function setPointsForUser($userId) 
     {
         $this->points = (int) (new Query())
-            ->select('SUM(asserted)')
-            ->from('bet')
-            ->where(['user_id' => $user->id])
+            ->select('SUM(asserted)+SUM(g.is_extra_point)')
+            ->from('bet b')
+            ->innerJoin('game g', 'b.game_id = g.id')
+            ->where(['user_id' => $userid])
             ->scalar();
     }
 }
